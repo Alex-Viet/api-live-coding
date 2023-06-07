@@ -1,7 +1,7 @@
-import { loginUser } from "../api.js";
+import { loginUser, registerUser } from "../api.js";
 
 export function renderLoginComponent({ appEl, setToken, fetchTodosAndRender }) {
-    let isLoginMode = false;
+    let isLoginMode = true;
 
     const renderForm = () => {
         const appHtml = `<h1>Список задач</h1>
@@ -30,26 +30,57 @@ export function renderLoginComponent({ appEl, setToken, fetchTodosAndRender }) {
         const toggleButtonElem = document.getElementById("toggle-button");
 
         loginButtonElem.addEventListener("click", () => {
-            const login = document.getElementById("login-input").value;
-            const password = document.getElementById("password-input").value;
+            if (isLoginMode) {
+                const login = document.getElementById("login-input").value;
+                const password = document.getElementById("password-input").value;
 
-            if (!login) {
-                alert("Введите логин!");
-                return;
-            };
+                if (!login) {
+                    alert("Введите логин!");
+                    return;
+                };
 
-            if (!password) {
-                alert("Введите пароль!");
-                return;
-            };
+                if (!password) {
+                    alert("Введите пароль!");
+                    return;
+                };
 
-            loginUser({
-                login: login,
-                password: password,
-            }).then((user) => {
-                setToken(`Bearer ${user.user.token}`);
-                fetchTodosAndRender();
-            }).catch(error => alert(error.message)); // Поменять alert на что-то красивее!
+                loginUser({
+                    login: login,
+                    password: password,
+                }).then((user) => {
+                    setToken(`Bearer ${user.user.token}`);
+                    fetchTodosAndRender();
+                }).catch(error => alert(error.message)); // Поменять alert на что-то красивее!
+            } else {
+                const name = document.getElementById("name-input").value;
+                const login = document.getElementById("login-input").value;
+                const password = document.getElementById("password-input").value;
+
+                if (!name) {
+                    alert("Введите имя!");
+                    return;
+                };
+
+                if (!login) {
+                    alert("Введите логин!");
+                    return;
+                };
+
+                if (!password) {
+                    alert("Введите пароль!");
+                    return;
+                };
+
+                registerUser({
+                    login: login,
+                    name: name,
+                    password: password,
+                }).then((user) => {
+                    setToken(`Bearer ${user.user.token}`);
+                    fetchTodosAndRender();
+                }).catch(error => alert(error.message)); // Поменять alert на что-то красивее!
+            }
+
         });
 
         toggleButtonElem.addEventListener("click", () => {
