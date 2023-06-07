@@ -32,7 +32,7 @@ const renderApp = () => {
             return `
           <li class="task">
             <p class="task-text">
-              ${task.text}
+              ${task.text} (Создал: ${task.user?.name ?? "Автор неизвестен"})
               <button data-id="${task.id}" class="button delete-button">Удалить</button>
             </p>
           </li>`;
