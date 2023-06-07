@@ -1,5 +1,6 @@
 const host = "https://webdev-hw-api.vercel.app/api/v2/todos";
 
+
 export function getTodo({ token }) {
     return fetch(host, {
         method: "GET",
@@ -41,6 +42,20 @@ export function addTodo({ token, text }) {
         headers: {
             Authorization: token,
         }
+    })
+        .then((response) => {
+            return response.json();
+        })
+};
+
+
+export function login({ login, password }) {
+    return fetch("https://wedev-api.sky.pro/api/user/login", {
+        method: "POST",
+        body: JSON.stringify({
+            login,
+            password,
+        }),
     })
         .then((response) => {
             return response.json();
