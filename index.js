@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { addTodo, deleteTodo, getTodo } from "./api.js";
 import { renderLoginComponent } from "./components/login-component.js";
 import { formatDateToRu, formatDateToUs } from "./lib/formatDate/formatDate.js";
@@ -30,13 +31,14 @@ const renderApp = () => {
 
     const tasksHtml = tasks
         .map((task) => {
+            const createDate = format(new Date(task.created_at), 'dd/MM/yyyy hh:mm');
             return `
           <li class="task">
             <p class="task-text">
               ${task.text} (Создал: ${task.user?.name ?? "Автор неизвестен"})
               <button data-id="${task.id}" class="button delete-button">Удалить</button>
             </p>
-            <p> <i>Задача создана: ${country === "ru" ? formatDateToRu(new Date(task.created_at)) : formatDateToUs(new Date(task.created_at))} </i> </p>
+            <p> <i>Задача создана: ${createDate} </i> </p>
           </li>`;
         })
         .join("");
