@@ -1,10 +1,11 @@
 import { addTodo, deleteTodo, getTodo } from "./api.js";
 import { renderLoginComponent } from "./components/login-component.js";
+import { formatDateToRu, formatDateToUs } from "./lib/formatDate/formatDate.js";
+
+const country = "ru";
 
 let tasks = [];
-
-let token = "Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k";
-token = null;
+let token = null;
 
 const fetchTodosAndRender = () => {
     return getTodo({ token })
@@ -35,6 +36,7 @@ const renderApp = () => {
               ${task.text} (Создал: ${task.user?.name ?? "Автор неизвестен"})
               <button data-id="${task.id}" class="button delete-button">Удалить</button>
             </p>
+            <p> <i>Задача создана: ${country === "ru" ? formatDateToRu(new Date(task.created_at)) : formatDateToUs(new Date(task.created_at))} </i> </p>
           </li>`;
         })
         .join("");
@@ -58,7 +60,6 @@ const renderApp = () => {
     appEl.innerHTML = appHtml;
 
     const buttonElement = document.getElementById("add-button");
-    const listElement = document.getElementById("list");
     const textInputElement = document.getElementById("text-input");
     const deleteButtons = document.querySelectorAll(".delete-button");
 

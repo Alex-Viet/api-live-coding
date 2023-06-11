@@ -10,11 +10,8 @@ export function getTodo({ token }) {
     })
         .then((response) => {
             if (response.status === 401) {
-                // password = prompt("Введите верный пароль");
-                // fetchTodosAndRender();
                 throw new Error("Нет авторизации");
-            }
-
+            };
             return response.json();
         })
 };
